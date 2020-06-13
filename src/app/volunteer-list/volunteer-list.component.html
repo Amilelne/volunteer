@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="card-body header">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <img src="../../assets/icons/search.svg" alt="search" class="searchIcon">
+        </div>
+        <input type="text" class="form-control search-input" placeholder="Volunteer group" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+    </div>    
+    <ul class="list-group">
+        <li class="list-group-item"  *ngFor="let group of groupList">
+           <div class="card-body">
+               <h5 class="card-title">Volunteer team 1</h5>
+               <div class="rate">
+                <app-stars></app-stars>
+                <p class="card-text">4.8(67)</p>
+               </div>
+               <div class="users">
+                <fa-icon [icon]="faUser"></fa-icon>
+                <p class="card-text user-number">50</p>
+               </div>
+               <div class="phone">
+                <fa-icon [icon]="faPhoneAlt"></fa-icon>
+                <p class="card-text">(415)000-0001</p>
+               </div>
+               <div>
+                <span class="badge badge-danger">Need Food</span>
+                <span class="badge badge-danger">Need Clothes</span>
+                <span class="badge badge-warning">Fast</span>
+               </div>      
+           </div> 
+        </li>
+    </ul>
+  </div>
