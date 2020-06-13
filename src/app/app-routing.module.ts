@@ -1,34 +1,34 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { VolunteerListComponent } from './volunteer-list/volunteer-list.component';
-import { DemandComponent } from './demand/demand.component';
 
 const routes: Routes = [
-{
-  path: 'signin', 
-  component: LoginComponent
-},
-{
-  path: 'signup',
-  component: SignupComponent
-},
-{
-  path: 'vlist',
-  component: VolunteerListComponent
-},
-{
-  path: 'demand',
-  component: DemandComponent
-},
-{
-  path: '',
-  component: LoginComponent
-}];
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'vlist',
+    loadChildren: () =>
+      import('./pages/volunteer/volunteer.module').then(
+        (m) => m.VolunteerModule
+      ),
+  },
+  {
+    path: 'demand',
+    loadChildren: () =>
+      import('./pages/demand/demand.module').then((m) => m.DemandModule),
+  },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then((m) => m.ProfileModule),
+  },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
