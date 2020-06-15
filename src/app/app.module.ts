@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { MenuComponent } from './menu/menu.component';
 
 import { HttpClientModule } from "@angular/common/http";
+import { httpInterceptorProviders } from './http-interceptors';
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
@@ -19,7 +20,7 @@ import { HttpClientModule } from "@angular/common/http";
     }),
     HttpClientModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
