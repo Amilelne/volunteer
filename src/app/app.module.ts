@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { MenuComponent } from './menu/menu.component';
 
+import { HttpClientModule } from "@angular/common/http";
+
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [
@@ -15,6 +17,7 @@ import { MenuComponent } from './menu/menu.component';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
