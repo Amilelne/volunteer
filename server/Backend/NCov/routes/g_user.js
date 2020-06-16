@@ -28,17 +28,17 @@ router.post('/login', cors(corsOptions),function(req, res) {
           if(err2 == null){
             if(docs2.length!=0){
               var collection = db.get('volunteerList');
-              collection.find({},{}).limit(10,function(err1,docs1){
+              collection.find({limit:10},function(err1,docs1){
                   res.send(docs1);
               });
-              }else res.json("Login failure");
             }else res.json("Login failure");
           }else res.json(err);
           
 
-      }else res.json("Login failure");
-    }else res.json(err);
-  });
+      });
+    }else res.json("Login failure");
+  }else res.json(err);
+});
 });
 
 router.get('/logout', cors(corsOptions),function(req, res) {

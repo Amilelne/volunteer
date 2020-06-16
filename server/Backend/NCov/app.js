@@ -33,6 +33,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+app.set('view engine', 'pug');
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -44,7 +45,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
 
 var server = app.listen(3002, function () {
   var host = server.address().address;
