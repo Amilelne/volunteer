@@ -18,29 +18,41 @@
     </div>
   </div>
   <ul class="list-group">
-    <li class="list-group-item" *ngFor="let group of groupList">
+    <li class="list-group-item" *ngFor="let demand of demands">
       <div class="card-body">
-        <h5 class="card-title">Demand 1</h5>
+        <h5 class="card-title">{{ demand.name }}</h5>
         <div class="information">
           <img src="../../assets/icons/phone.svg" alt="phone" />
-          <p class="card-text">(415)000-0001</p>
+          <p class="card-text">{{ demand.phone }}</p>
         </div>
         <div class="information">
           <img src="../../assets/icons/map-pin.svg" alt="need" />
-          <p class="card-text">Beijing China</p>
+          <p class="card-text">{{ demand.location }}</p>
         </div>
         <div class="information">
           <img src="../../assets/icons/clock.svg" alt="need" />
-          <p class="card-text">2020/08/21</p>
+          <p class="card-text">{{ demand.deadline }}</p>
         </div>
         <div class="information">
           <img src="../../assets/icons/info.svg" alt="need" />
           <p class="card-text">Asking someone to help buying water</p>
         </div>
-        <div>
-          <span class="badge badge-danger">No Money</span>
-          <span class="badge badge-danger">No Supplies</span>
-        </div>
+
+        <!-- Show tags key-->
+        <ng-container *ngIf="demand.tagsKey">
+          <ng-container *ngFor="let key of demand.tagsKey">
+            <span
+              *ngIf="demand.tags[key] === 'very'"
+              class="badge badge-danger"
+              >{{ key }}</span
+            >
+            <span
+              *ngIf="demand.tags[key] === 'normal'"
+              class="badge badge-warning"
+              >{{ key }}</span
+            >
+          </ng-container>
+        </ng-container>
       </div>
     </li>
   </ul>
