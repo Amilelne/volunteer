@@ -139,6 +139,28 @@ router.post('/editDemand', cors(corsOptions),function(req, res){
   
   
 });
+
+
+router.post('/viewDemands', cors(corsOptions),function(req, res){
+  // get info
+  var db = req.db;
+  var username = req.body.username;
+  var password = req.body.password;
+
+
+  let response = verify(req,username,password); 
+  if(response){
+  	var collection = db.get('demandList');
+	collection.find({
+	    gusername:username 
+	},function(err1,docs1){
+		console.log(docs1);
+		res.send(docs1);
+	});
+  }else res.json("Authentication Failure");
+  
+  
+});
 // --------------------------------------------------------------------------------------------------------------------
 // Utilities:
 // VERIFY
