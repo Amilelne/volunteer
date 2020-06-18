@@ -29,9 +29,29 @@ router.post('/login', cors(corsOptions),function(req, res) {
 	console.log(response);
     if(response){
 		var collection = db.get('volunteerList');
-	    collection.aggregate([
-			{ $limit: 10 },
-			{ $lookup: { from: 'userList', localField: 'username', foreignField: 'username', as: 'username' } }
+		var collection3 = db.get('needList');
+	    collection.aggregate([{
+	    	$lookup: { from: 'userList', localField: 'username', foreignField: 'username', as: 'username' } 
+	    }, {
+            $unwind: {
+                path: "$username",
+                preserveNullAndEmptyArrays: false
+            }
+        },{
+            $lookup: {
+                from: "needList",
+                localField: "volunteerList.username",
+                foreignField: "needList.username",
+                as: "username1"
+            }
+        },{
+            $unwind: {
+                path: "$username1",
+                preserveNullAndEmptyArrays: false
+            }
+        },{ 
+        	$limit: 10 
+        }
 		],function(err1,docs1){
 		    console.log(docs1);
 		    res.send(docs1);
