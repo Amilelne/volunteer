@@ -55,9 +55,9 @@ router.post('/login', cors(corsOptions),function(req, res) {
 		],function(err1,docs1){
 		    console.log(docs1);
 		    res.send(docs1);
-		});
-		}else res.json("Login failure");
 	});
+	}else res.json("Login failure");
+});
 
 router.get('/logout', cors(corsOptions),function(req, res) {
   res.send("logout");
@@ -70,26 +70,46 @@ router.get('/logout', cors(corsOptions),function(req, res) {
 // ADD, EDIT, DELETE, COMMENT
 
 router.post('/addDemand', cors(corsOptions),function(req, res){
+  // get info
   var db = req.db;
   var username = req.body.username;
   var password = req.body.password;
-  var _id = req.params.photoid;
-  var collection = db.get('userList');
-  collection.find({"_id":userid},{},function(err,docs){
-    username = docs[0]['username'];
-    var collection1 = db.get('photoList');
-    collection1.findOneAndUpdate({_id:_id}, { $push: {"likedby":username}}, function (err1, result) {
-      res.json(
-          (err1 === null) ? { msg: result["likedby"] } : { msg: err }
-      );
-    });
-  });
+  // var volusername = req.body.volusername;
+  var state = req.body.state;
+  var type = req.body.type;
+  var descript = req.body.descript;
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = mm + '/' + dd + '/' + yyyy;
+
+
+  let response = verify(req,username,password); 
+  console.log(response);
+  if(response){
+  	var collection = db.get('demandList');
+  	collection.insert({
+  		gusername:username,
+  		// volusername: volusername, 
+  		state:state,
+  		type:type,
+  		description:descript,
+  		creation_date:today
+  	}, 
+  		function(err, result){
+    		res.json("Demand is added successfully");
+  		}
+  	);
+  }else res.json("Authentication Failure");
   
   
 });
 
 
-
+// --------------------------------------------------------------------------------------------------------------------
+// Utilities:
+// VERIFY
 async function verify(req,username,password){
   var db = req.db;
   var collection1 = db.get('userList');
