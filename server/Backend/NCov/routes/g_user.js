@@ -67,7 +67,7 @@ router.get('/logout', cors(corsOptions),function(req, res) {
 
 // --------------------------------------------------------------------------------------------------------------------
 // MANAGE DEMAND:
-// ADD, EDIT, DELETE, COMMENT
+// ADD, EDIT, VIEW, DELETE, COMMENT
 
 router.post('/addDemand', cors(corsOptions),function(req, res){
   // get info
@@ -80,7 +80,7 @@ router.post('/addDemand', cors(corsOptions),function(req, res){
   var descript = req.body.descript;
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
   var yyyy = today.getFullYear();
   today = mm + '/' + dd + '/' + yyyy;
 
@@ -107,6 +107,38 @@ router.post('/addDemand', cors(corsOptions),function(req, res){
 });
 
 
+// State and Creation Date cannot be edited
+router.post('/editDemand', cors(corsOptions),function(req, res){
+  // get info
+  var db = req.db;
+  var username = req.body.username;
+  var password = req.body.password;
+  var type = req.body.type;
+  var descript = req.body.descript;
+  var _id = req.body._id;
+
+
+  let response = verify(req,username,password); 
+  console.log(response);
+  if(response){
+  	var collection = db.get('demandList');
+  	collection.update({
+  		_id:_id,
+  		gusername:username
+  	},{
+  		$set: {
+	  		type:type,
+	  		description:descript
+  		}
+  	}, 
+  		function(err, result){
+    		res.json("Demand is edited successfully");
+  		}
+  	);
+  }else res.json("Authentication Failure");
+  
+  
+});
 // --------------------------------------------------------------------------------------------------------------------
 // Utilities:
 // VERIFY
