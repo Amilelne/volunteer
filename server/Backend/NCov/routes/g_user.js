@@ -27,7 +27,7 @@ router.post('/login', cors(corsOptions),function(req, res) {
   var collection2 = db.get('guserList');
 	let response = verify(req,username,password); 
 	console.log(response);
-    if(response){
+    if(response==true){
 		var collection = db.get('volunteerList');
 		var collection3 = db.get('needList');
 	    collection.aggregate([{
@@ -75,7 +75,6 @@ router.post('/addDemand', cors(corsOptions),function(req, res){
   var username = req.body.username;
   var password = req.body.password;
   // var volusername = req.body.volusername;
-  var state = req.body.state;
   var type = req.body.type;
   var descript = req.body.descript;
   var today = new Date();
@@ -87,12 +86,12 @@ router.post('/addDemand', cors(corsOptions),function(req, res){
 
   let response = verify(req,username,password); 
   console.log(response);
-  if(response){
+  if(response==true){
   	var collection = db.get('demandList');
   	collection.insert({
   		gusername:username,
   		// volusername: volusername, 
-  		state:state,
+  		state:"Waiting",
   		type:type,
   		description:descript,
   		creation_date:today
@@ -120,11 +119,12 @@ router.post('/editDemand', cors(corsOptions),function(req, res){
 
   let response = verify(req,username,password); 
   console.log(response);
-  if(response){
+  if(response==true){
   	var collection = db.get('demandList');
   	collection.update({
   		_id:_id,
-  		gusername:username
+  		gusername:username,
+  		state:{$ne:"Finish"}
   	},{
   		$set: {
 	  		type:type,
@@ -149,14 +149,71 @@ router.post('/viewDemands', cors(corsOptions),function(req, res){
 
 
   let response = verify(req,username,password); 
-  if(response){
+  if(response==true){
   	var collection = db.get('demandList');
 	collection.find({
-	    gusername:username 
+	    gusername:username,
+	    state:{$ne:"Finish"}
 	},function(err1,docs1){
 		console.log(docs1);
 		res.send(docs1);
 	});
+  }else res.json("Authentication Failure");
+  
+  
+});
+
+router.delete('/deleteDemand', cors(corsOptions),function(req, res){
+  // get info
+  var db = req.db;
+  var username = req.body.username;
+  var password = req.body.password;
+  var _id = req.body._id;
+
+
+  let response = verify(req,username,password); 
+  console.log(response);
+  if(response==true){
+  	var collection = db.get('demandList');
+  	collection.remove({
+  		_id:_id,
+  		gusername:username,
+  		state:{$ne:"Finish"}
+  	}, 
+  		function(err, result){
+    		res.json("Demand is deleted successfully");
+  		}
+  	);
+  }else res.json("Authentication Failure");
+  
+  
+});
+
+router.post('/commentOnDemand', cors(corsOptions),function(req, res){
+  // get info
+  var db = req.db;
+  var username = req.body.username;
+  var password = req.body.password;
+  var _id = req.body._id;
+  var comment = req.body.comment;
+
+
+  let response = verify(req,username,password); 
+  if(response==true){
+  	var collection = db.get('demandList');
+  	collection.update({
+  		_id:_id,
+  		gusername:username,
+  		state:"Finish"
+  	},{
+  		$set:{
+  			comment:comment
+  		}
+  	},
+  		function(err, result){
+    		res.json("Demand is commented");
+  		}
+  	);
   }else res.json("Authentication Failure");
   
   
@@ -171,12 +228,10 @@ async function verify(req,username,password){
   var res;
   await collection1.find({"username":username},{}, function(err,docs){
     if(err == null){
-    	console.log("1");
-      if(docs.length!=0&&docs[0]['password']==password){
-      	console.log("2");
+    	console.log(docs[0]['password']===password);
+      if(docs.length!=0&&docs['password']===password){
          collection2.find({"username":username},{},function(err2,docs2){
           if(err2 == null){
-          	console.log("3");
             if(docs2.length!=0){
             	res = true;
             }else { res = false};
@@ -188,12 +243,6 @@ async function verify(req,username,password){
   console.log(res);
   return res;
 }
-/*
- * Handle preflighted request
- */
-
-var allow = ['/uploadphoto','/updatelike/:photoid','/deletephoto/:photoid'];
-router.options(allow,cors(corsOptions));
 
 
 
