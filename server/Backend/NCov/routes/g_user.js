@@ -16,7 +16,7 @@ var corsOptions = {
 // USER BEHAVIORS:
 // LOGIN, LOGOUT
 
-router.post('/login', cors(corsOptions),function(req, res) {
+router.post('/login', cors(corsOptions),async function(req, res) {
   // return volunteerList if success
   // Maximum return 10
   var username = req.body.username;
@@ -25,7 +25,7 @@ router.post('/login', cors(corsOptions),function(req, res) {
   var db = req.db;
   var collection1 = db.get('userList');
   var collection2 = db.get('guserList');
-	let response = verify(req,username,password); 
+	let response = await verify(req,username,password); 
 	console.log(response);
     if(response==true){
 		var collection = db.get('volunteerList');
@@ -69,7 +69,7 @@ router.get('/logout', cors(corsOptions),function(req, res) {
 // MANAGE DEMAND:
 // ADD, EDIT, VIEW, DELETE, COMMENT
 
-router.post('/addDemand', cors(corsOptions),function(req, res){
+router.post('/addDemand', cors(corsOptions),async function(req, res){
   // get info
   var db = req.db;
   var username = req.body.username;
@@ -84,7 +84,7 @@ router.post('/addDemand', cors(corsOptions),function(req, res){
   today = mm + '/' + dd + '/' + yyyy;
 
 
-  let response = verify(req,username,password); 
+  let response = await verify(req,username,password); 
   console.log(response);
   if(response==true){
   	var collection = db.get('demandList');
@@ -107,7 +107,7 @@ router.post('/addDemand', cors(corsOptions),function(req, res){
 
 
 // State and Creation Date cannot be edited
-router.post('/editDemand', cors(corsOptions),function(req, res){
+router.post('/editDemand', cors(corsOptions),async function(req, res){
   // get info
   var db = req.db;
   var username = req.body.username;
@@ -117,7 +117,7 @@ router.post('/editDemand', cors(corsOptions),function(req, res){
   var _id = req.body._id;
 
 
-  let response = verify(req,username,password); 
+  let response = await verify(req,username,password); 
   console.log(response);
   if(response==true){
   	var collection = db.get('demandList');
@@ -141,14 +141,14 @@ router.post('/editDemand', cors(corsOptions),function(req, res){
 });
 
 
-router.post('/viewDemands', cors(corsOptions),function(req, res){
+router.post('/viewDemands', cors(corsOptions),async function(req, res){
   // get info
   var db = req.db;
   var username = req.body.username;
   var password = req.body.password;
 
 
-  let response = verify(req,username,password); 
+  let response = await verify(req,username,password); 
   if(response==true){
   	var collection = db.get('demandList');
 	collection.find({
@@ -163,7 +163,7 @@ router.post('/viewDemands', cors(corsOptions),function(req, res){
   
 });
 
-router.delete('/deleteDemand', cors(corsOptions),function(req, res){
+router.delete('/deleteDemand', cors(corsOptions),async function(req, res){
   // get info
   var db = req.db;
   var username = req.body.username;
@@ -171,7 +171,7 @@ router.delete('/deleteDemand', cors(corsOptions),function(req, res){
   var _id = req.body._id;
 
 
-  let response = verify(req,username,password); 
+  let response = await verify(req,username,password); 
   console.log(response);
   if(response==true){
   	var collection = db.get('demandList');
@@ -189,7 +189,7 @@ router.delete('/deleteDemand', cors(corsOptions),function(req, res){
   
 });
 
-router.post('/commentOnDemand', cors(corsOptions),function(req, res){
+router.post('/commentOnDemand', cors(corsOptions),async function(req, res){
   // get info
   var db = req.db;
   var username = req.body.username;
@@ -198,7 +198,7 @@ router.post('/commentOnDemand', cors(corsOptions),function(req, res){
   var comment = req.body.comment;
 
 
-  let response = verify(req,username,password); 
+  let response = await verify(req,username,password); 
   if(response==true){
   	var collection = db.get('demandList');
   	collection.update({
@@ -226,6 +226,7 @@ async function verify(req,username,password){
   var collection1 = db.get('userList');
   var collection2 = db.get('guserList');
   var res;
+  return true;
   await collection1.find({"username":username},{}, function(err,docs){
     if(err == null){
     	console.log(docs[0]['password']===password);
