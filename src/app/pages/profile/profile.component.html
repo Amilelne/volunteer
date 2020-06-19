@@ -1,10 +1,13 @@
 <div class="main">
   <div class="header">
-    <img src="../../assets/images/avatar.png " alt="avatar" class="avatar" />
-    <div class="info">
-      <h5>Amelie</h5>
-      <p>amelie@gmail.com</p>
-    </div>
+    <ng-container *ngIf="user">
+      <img src={{user.avatar.url}} alt="avatar" class="avatar" />
+      <div class="info">
+        <h5>{{user.username}}</h5>
+        <p>{{user.email}}</p>
+      </div>
+      <img src="../../assets/icons/settings.svg" alt="settings" class="settings"/>
+    </ng-container>
   </div>
   <div class="myneed">
     <div class="title">

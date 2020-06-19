@@ -7,17 +7,22 @@
     background-color: #d63031;
     color: white;
     padding: 1rem;
+    .avatar{
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;;
+    }
+    .info{
+        display: flex;
+        flex-direction: column;
+        margin-left: 1rem;
+    }
+    .settings{
+        margin-left: auto;
+        margin-right: 1rem;
+    }
 }
-.avatar{
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;;
-}
-.info{
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-}
+
 .myneed{
     margin: 1rem;
     border-radius: 1rem;

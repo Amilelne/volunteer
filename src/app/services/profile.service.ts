@@ -1,16 +1,14 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
-export class DemandService{
-    constructor(private http:HttpClient){}
+export class ProfileService {
+  constructor(private http: HttpClient) {}
 
-    getProfile(){
-        let response = this.http.get('http://localhost:1337/users');
-        response.subscribe((data) => {
-          console.log(data)
-        })
-      }
+  getProfile() {
+    return this.http.get('/api/users/me');
+  }
 }
