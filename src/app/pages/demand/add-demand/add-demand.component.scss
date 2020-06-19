@@ -1,0 +1,20 @@
+.header{
+    display: inline-flex;
+    background-color: #d63031;
+    color: white;
+    padding: 2rem;
+    width: 100%;
+    .card-title{
+        padding: 1rem;
+    }
+}
+form{
+    width: 90%;
+    margin: 3rem auto;
+}
+button{
+    width: 100%;
+    background-color: #0984e3;
+    color: white;
+    margin-top: 1rem;
+}

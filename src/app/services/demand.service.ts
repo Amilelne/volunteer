@@ -11,4 +11,8 @@ export class DemandService {
   getDemands() {
     return this.http.get('/api/demands');
   }
+
+  addDemand(demandInput){
+    return this.http.post('/api/demands', demandInput)
+  }
 }

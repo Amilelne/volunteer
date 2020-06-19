@@ -17,9 +17,16 @@
     .search-input{
         border: none;
     }
+    input{
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
     input:focus{
         outline: none;
         box-shadow: none;
+    }
+    .plusIcon{
+        margin-left: 1rem;
     }
 }
 .rate{
@@ -45,6 +52,7 @@
     }
 }
 .addButton{
-    position: absolute;
+    position: fixed;
     float: right;
+    margin-top: 5rem;
 }
