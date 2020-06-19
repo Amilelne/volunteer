@@ -13,8 +13,9 @@ export class AuthService {
 
   signin(signinInput) {
     return this.http.post('/api/auth/local', signinInput).pipe(
-      tap((data: { jwt; user }) => {
+      tap((data: { jwt, user: {role: {id}} }) => {
         AuthService.storeToken(data.jwt);
+        AuthService.storeUserId(data.user.role.id)
       })
     );
   }
@@ -24,7 +25,7 @@ export class AuthService {
   }
 
   logout() {
-      AuthService.removeToken();
+    localStorage.clear()
   }
 
   static storeToken(token: string) {
@@ -37,5 +38,13 @@ export class AuthService {
 
   static removeToken() {
     localStorage.removeItem(this.AUTH_TOKEN);
+  }
+
+  static storeUserId(userId: string) {
+    localStorage.setItem(this.AUTH_USER_ID, userId);
+  }
+
+  static getUserId() {
+    return localStorage.getItem(this.AUTH_USER_ID);
   }
 }
