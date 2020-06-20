@@ -10,10 +10,13 @@ import { MenuComponent } from './menu/menu.component';
 import { HttpClientModule } from "@angular/common/http";
 import { httpInterceptorProviders } from './http-interceptors';
 
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
