@@ -1,0 +1,31 @@
+.main {
+  background-color: #f2f2f2;
+  height: 100vh;
+}
+.header {
+  display: inline-flex;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  padding: 0.75rem;
+  .title {
+    font-size: large;
+  }
+}
+.content {
+    padding-top: 1rem;
+  .item {
+    display: flex;
+    padding: 1rem;
+    width: 100%;
+    line-height: none;
+    align-items: center;
+    background-color: white;
+    border-bottom: 1px solid #f2f2f2;
+
+    .right-arrow {
+      margin-left: auto;
+      margin-right: 1rem;
+    }
+  }
+}
