@@ -15,4 +15,8 @@ export class DemandService {
   addDemand(demandInput){
     return this.http.post('/api/demands', demandInput)
   }
+
+  getDemandById(id){
+    return this.http.get('/api/demands/'+id);
+  }
 }
