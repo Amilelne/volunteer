@@ -8,7 +8,7 @@ import { SettingsComponent } from './settings/settings.component';
 
 const profileRoutes: Routes = [
   {
-    path: 'demands',
+    path: 'demands/:state',
     component: DemandListComponent,
   },
   {
