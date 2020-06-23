@@ -2,7 +2,7 @@ var express = require('express');
 var cors = require('cors');
 var router = express.Router();
 const fs = require('fs');
-
+var response;
 
 var corsOptions = {
 
@@ -25,40 +25,43 @@ router.post('/login', cors(corsOptions),async function(req, res) {
   var db = req.db;
   var collection1 = db.get('userList');
   var collection2 = db.get('guserList');
-	let response = await verify(req,username,password); 
-	console.log(response);
-    if(response==true){
-		var collection = db.get('volunteerList');
-		var collection3 = db.get('needList');
-	    collection.aggregate([{
-	    	$lookup: { from: 'userList', localField: 'username', foreignField: 'username', as: 'username' } 
-	    }, {
-            $unwind: {
-                path: "$username",
-                preserveNullAndEmptyArrays: false
-            }
-        },{
-            $lookup: {
-                from: "needList",
-                localField: "volunteerList.username",
-                foreignField: "needList.username",
-                as: "username1"
-            }
-        },{
-            $unwind: {
-                path: "$username1",
-                preserveNullAndEmptyArrays: false
-            }
-        },{ 
-        	$limit: 10 
-        }
-		],function(err1,docs1){
-		    console.log(docs1);
-		    res.send(docs1);
-	});
-	}else res.json("Login failure");
+  
+  verify(req,username,password).then(()=>{
+  	setTimeout(function(){
+  	if(response==true){
+				var collection = db.get('volunteerList');
+				var collection3 = db.get('needList');
+			    collection.aggregate([{
+			    	$lookup: { from: 'userList', localField: 'username', foreignField: 'username', as: 'username' } 
+			    }, {
+		            $unwind: {
+		                path: "$username",
+		                preserveNullAndEmptyArrays: false
+		            }
+		        },{
+		            $lookup: {
+		                from: "needList",
+		                localField: "volunteerList.username",
+		                foreignField: "needList.username",
+		                as: "username1"
+		            }
+		        },{
+		            $unwind: {
+		                path: "$username1",
+		                preserveNullAndEmptyArrays: false
+		            }
+		        },{ 
+		        	$limit: 10 
+		        }
+				],function(err1,docs1){
+				    console.log(docs1);
+				    res.send(docs1);
+				});
+			}else res.json("Login failure");
+	}, 50);
+	
+  }); 
 });
-
 router.get('/logout', cors(corsOptions),function(req, res) {
   res.send("logout");
  
@@ -84,9 +87,10 @@ router.post('/addDemand', cors(corsOptions),async function(req, res){
   today = mm + '/' + dd + '/' + yyyy;
 
 
-  let response = await verify(req,username,password); 
-  console.log(response);
-  if(response==true){
+  
+  verify(req,username,password).then(()=>{
+  	setTimeout(function(){
+  	if(response==true){
   	var collection = db.get('demandList');
   	collection.insert({
   		gusername:username,
@@ -101,6 +105,8 @@ router.post('/addDemand', cors(corsOptions),async function(req, res){
   		}
   	);
   }else res.json("Authentication Failure");
+	}, 50);
+  }); 
   
   
 });
@@ -117,9 +123,10 @@ router.post('/editDemand', cors(corsOptions),async function(req, res){
   var _id = req.body._id;
 
 
-  let response = await verify(req,username,password); 
-  console.log(response);
-  if(response==true){
+  
+  verify(req,username,password).then(()=>{
+  	setTimeout(function(){
+  	if(response==true){
   	var collection = db.get('demandList');
   	collection.update({
   		_id:_id,
@@ -136,6 +143,8 @@ router.post('/editDemand', cors(corsOptions),async function(req, res){
   		}
   	);
   }else res.json("Authentication Failure");
+	}, 50);
+  }); 
   
   
 });
@@ -148,17 +157,23 @@ router.post('/viewDemands', cors(corsOptions),async function(req, res){
   var password = req.body.password;
 
 
-  let response = await verify(req,username,password); 
-  if(response==true){
-  	var collection = db.get('demandList');
-	collection.find({
-	    gusername:username,
-	    state:{$ne:"Finish"}
-	},function(err1,docs1){
-		console.log(docs1);
-		res.send(docs1);
-	});
-  }else res.json("Authentication Failure");
+  verify(req,username,password).then(()=>{
+  	setTimeout(function(){
+  	console.log("returned");
+	  console.log(response);
+	  if(response==true){
+	  	var collection = db.get('demandList');
+		collection.find({
+		    gusername:username,
+		    state:{$ne:"Finish"}
+		},function(err1,docs1){
+			console.log(docs1);
+			res.send(docs1);
+		});
+	  }else res.json("Authentication Failure");
+	}, 50);
+  }); 
+  
   
   
 });
@@ -171,9 +186,11 @@ router.delete('/deleteDemand', cors(corsOptions),async function(req, res){
   var _id = req.body._id;
 
 
-  let response = await verify(req,username,password); 
-  console.log(response);
-  if(response==true){
+  verify(req,username,password).then(()=>{
+  	setTimeout(function(){
+  	console.log("returned");
+	  console.log(response);
+	  if(response==true){
   	var collection = db.get('demandList');
   	collection.remove({
   		_id:_id,
@@ -185,6 +202,9 @@ router.delete('/deleteDemand', cors(corsOptions),async function(req, res){
   		}
   	);
   }else res.json("Authentication Failure");
+	}, 50);
+  }); 
+
   
   
 });
@@ -198,8 +218,11 @@ router.post('/commentOnDemand', cors(corsOptions),async function(req, res){
   var comment = req.body.comment;
 
 
-  let response = await verify(req,username,password); 
-  if(response==true){
+  verify(req,username,password).then(()=>{
+  	setTimeout(function(){
+  	console.log("returned");
+	  console.log(response);
+	  if(response==true){
   	var collection = db.get('demandList');
   	collection.update({
   		_id:_id,
@@ -215,6 +238,8 @@ router.post('/commentOnDemand', cors(corsOptions),async function(req, res){
   		}
   	);
   }else res.json("Authentication Failure");
+	}, 50);
+  }); ; 
   
   
 });
@@ -225,24 +250,24 @@ async function verify(req,username,password){
   var db = req.db;
   var collection1 = db.get('userList');
   var collection2 = db.get('guserList');
-  var res;
-  return true;
-  await collection1.find({"username":username},{}, function(err,docs){
+  collection1.find({"username":username},{}, function(err,docs){
     if(err == null){
+    	console.log(docs[0]['password']);
     	console.log(docs[0]['password']===password);
-      if(docs.length!=0&&docs['password']===password){
+      if((docs.length!=0)&&docs[0]['password']===password){
+      	console.log("2");
          collection2.find({"username":username},{},function(err2,docs2){
           if(err2 == null){
             if(docs2.length!=0){
-            	res = true;
-            }else { res = false};
-          }else { res = false};     
+            	response = true;
+            }else { response = false};
+          }else { response = false};     
       });
-    }else { res = false};
-  }else { res = false};
+    }else { response = false};
+  }else { responses = false};
 });
-  console.log(res);
-  return res;
+  
+
 }
 
 
