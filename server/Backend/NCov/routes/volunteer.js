@@ -1,159 +1,292 @@
 var express = require('express');
 var cors = require('cors');
 var router = express.Router();
-var cookieParser = require('cookie-parser');
 const fs = require('fs');
-
+var response;
 
 var corsOptions = {
 
-  origin:'http://localhost:3000',
+  origin: 'http://localhost:3000',
 
-  credentials:true
+  credentials: true
 
 }
 
-router.use(cookieParser());
+// --------------------------------------------------------------------------------------------------------------------
+// USER BEHAVIORS:
+// LOGIN, LOGOUT
 
-router.get('/init', cors(corsOptions),function(req, res) {
-  var db = req.db;
-  var collection = db.get('userList'); 
-  if (req.cookies.userID) {
-    var userID = req.cookies.userID;
-  	collection.find({"_id":userID},{},function(err,docs){
-      if (err === null) {
-        var friends = docs[0]['friends'];
-        var friendIDs = [];
-        collection.find({"username":{$in:friends}},{},function(err1,docs1){
-          for( i = 0 ; i < docs1.length;++i){
-            friendIDs.push(docs1[i]['_id']);
-          }
-          var returnV  = {username: docs[0]['username'],friends :friends, friendIDs : friendIDs};
-          res.json(returnV);
-      });
-        
-      } else res.json(err);
-  	});
-  }
-  else res.json('');
-  
-});
-
-router.post('/login', cors(corsOptions),function(req, res) {
+router.post('/login', cors(corsOptions), async function (req, res) {
+  // return volunteerList if success
+  // Maximum return 10
   var username = req.body.username;
   var password = req.body.password;
-  
-  var db = req.db;
-  var collection = db.get('userList');
-  collection.find({"username":username},{},function(err,docs){
-    if(err == null){
-      if(docs.length!=0){
-        if(docs[0]['password']==password){
-          var milliseconds = 60* 60 * 1000;
-          var userID = docs[0]['_id'];
-          res.cookie("userID", userID, { maxAge: milliseconds });
-          var friends = docs[0]['friends'];
-          var friendIDs = [];
-          collection.find({"username":{$in:friends}},{},function(err1,docs1){
-              for( i = 0 ; i < docs1.length;++i){
-                friendIDs.push(docs1[i]['_id']);
-              }
-              var returnV  = {friends :friends, friendIDs : friendIDs};
-              res.send(returnV);
-          });
-          
-          
 
-        }else res.json("Login failure");
-      }else res.json("Login failure");
-    }else res.json(err);
+  var db = req.db;
+  var collection1 = db.get('userList');
+  var collection2 = db.get('guserList');
+
+  verify(req, username, password).then(() => {
+    setTimeout(function () {
+      if (response == true) {
+        var collection = db.get('volunteerList');
+        var collection3 = db.get('needList');
+        collection.aggregate([{
+          $lookup: {
+            from: 'userList',
+            localField: 'username',
+            foreignField: 'username',
+            as: 'username'
+          }
+        }, {
+          $unwind: {
+            path: "$username",
+            preserveNullAndEmptyArrays: false
+          }
+        }, {
+          $lookup: {
+            from: "needList",
+            localField: "volunteerList.username",
+            foreignField: "needList.username",
+            as: "username1"
+          }
+        }, {
+          $unwind: {
+            path: "$username1",
+            preserveNullAndEmptyArrays: false
+          }
+        }, {
+          $limit: 10
+        }], function (err1, docs1) {
+          console.log(docs1);
+          res.send(docs1);
+        });
+      } else res.json("Login failure");
+    }, 50);
+
   });
 });
+router.get('/logout', cors(corsOptions), function (req, res) {
+  res.send("logout");
 
-router.get('/logout', cors(corsOptions),function(req, res) {
-  // console.log(req.cookies.userID);
-  res.clearCookie('userID');
-  // res.redirect('/');
-  res.send('');
- 
 });
 
-router.get('/getalbum/:userid', cors(corsOptions),function(req, res) {
-  var userid = req.params.userid;
+
+// --------------------------------------------------------------------------------------------------------------------
+// MANAGE DEMAND:
+// ADD, EDIT, VIEW, DELETE, COMMENT
+
+router.post('/addDemand', cors(corsOptions), async function (req, res) {
+  // get info
   var db = req.db;
-  var collection = db.get('photoList');
-  if(userid == 0){
-    var userid = req.cookies.userID;
-  }
-  // console.log(req.cookies.userID);
-  collection.find({"userid":userid},{fields:{userid:0}},function(err,docs){
-    if (err === null){
-      res.json(docs);
-    }else res.send(err);
+  var username = req.body.username;
+  var password = req.body.password;
+  // var volusername = req.body.volusername;
+  var type = req.body.type;
+  var descript = req.body.descript;
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+  today = mm + '/' + dd + '/' + yyyy;
+
+
+  verify(req, username, password).then(() => {
+    setTimeout(function () {
+      if (response == true) {
+        var collection = db.get('demandList');
+        collection.insert({
+            gusername: username,
+            // volusername: volusername, 
+            state: "Waiting",
+            type: type,
+            description: descript,
+            creation_date: today
+          },
+          function (err, result) {
+            res.json("Demand is added successfully");
+          }
+        );
+      } else res.json("Authentication Failure");
+    }, 50);
   });
+
+
 });
 
-router.post('/uploadphoto', cors(corsOptions),function(req, res){
-  var crypto = require('crypto');
+
+// State and Creation Date cannot be edited
+router.post('/editDemand', cors(corsOptions), async function (req, res) {
+  // get info
   var db = req.db;
-  var data = (new Date()).toString();
-  data = crypto.createHash('md5').update(data).digest("hex");
-  var name = data + ".jpg";
-  var path =  __dirname+"/../public/uploads/" + name;
-  
-  req.pipe(fs.createWriteStream(path)).on('finish',function(){
-    var collection = db.get('photoList');
-    var userid = req.cookies.userID;
-    collection.insert({'url':'http://localhost:3002/uploads/'+name, 'userid': userid, 'likedby':[]}, function(err,docs){
-      if (err === null){
-        res.send({_id:docs["_id"],url:'http://localhost:3002/uploads/'+name,likedby:[]});
-      }else res.send(err);
-    });
+  var username = req.body.username;
+  var password = req.body.password;
+  var type = req.body.type;
+  var descript = req.body.descript;
+  var _id = req.body._id;
+
+
+  verify(req, username, password).then(() => {
+    setTimeout(function () {
+      if (response == true) {
+        var collection = db.get('demandList');
+        collection.update({
+            _id: _id,
+            gusername: username,
+            state: {
+              $ne: "Finish"
+            }
+          }, {
+            $set: {
+              type: type,
+              description: descript
+            }
+          },
+          function (err, result) {
+            res.json("Demand is edited successfully");
+          }
+        );
+      } else res.json("Authentication Failure");
+    }, 50);
   });
-  
-  
+
+
 });
 
-router.delete('/deletephoto/:photoid', cors(),function(req, res){
-  var db = req.db;
-  var _id = req.params.photoid;
-  var collection = db.get('photoList');
-  collection.findOneAndDelete({_id:_id},
-    function(err,docs){
-        if (err === null){
-          var path = __dirname+"/../public/uploads/"+docs["url"].substr(30);
-          fs.unlink( path, (err)=>{});
-          res.json('');
-        }else res.json(err);
-      });
-});
 
-router.put('/updatelike/:photoid', cors(corsOptions),function(req, res){
+router.post('/viewDemands', cors(corsOptions), async function (req, res) {
+  // get info
   var db = req.db;
-  var userid = req.cookies.userID;
-  var username;
-  var _id = req.params.photoid;
-  var collection = db.get('userList');
-  collection.find({"_id":userid},{},function(err,docs){
-    username = docs[0]['username'];
-    var collection1 = db.get('photoList');
-    collection1.findOneAndUpdate({_id:_id}, { $push: {"likedby":username}}, function (err1, result) {
-      res.json(
-          (err1 === null) ? { msg: result["likedby"] } : { msg: err }
-      );
-    });
+  var username = req.body.username;
+  var password = req.body.password;
+
+
+  verify(req, username, password).then(() => {
+    setTimeout(function () {
+      console.log("returned");
+      console.log(response);
+      if (response == true) {
+        var collection = db.get('demandList');
+        collection.find({
+          gusername: username,
+          state: {
+            $ne: "Finish"
+          }
+        }, function (err1, docs1) {
+          console.log(docs1);
+          res.send(docs1);
+        });
+      } else res.json("Authentication Failure");
+    }, 50);
   });
-  
+
 
 });
 
-/*
- * Handle preflighted request
- */
+router.delete('/deleteDemand', cors(corsOptions), async function (req, res) {
+  // get info
+  var db = req.db;
+  var username = req.body.username;
+  var password = req.body.password;
+  var _id = req.body._id;
 
-var allow = ['/uploadphoto','/updatelike/:photoid','/deletephoto/:photoid'];
-router.options(allow,cors(corsOptions));
 
+  verify(req, username, password).then(() => {
+    setTimeout(function () {
+      console.log("returned");
+      console.log(response);
+      if (response == true) {
+        var collection = db.get('demandList');
+        collection.remove({
+            _id: _id,
+            gusername: username,
+            state: {
+              $ne: "Finish"
+            }
+          },
+          function (err, result) {
+            res.json("Demand is deleted successfully");
+          }
+        );
+      } else res.json("Authentication Failure");
+    }, 50);
+  });
+
+
+});
+
+router.post('/commentOnDemand', cors(corsOptions), async function (req, res) {
+  // get info
+  var db = req.db;
+  var username = req.body.username;
+  var password = req.body.password;
+  var _id = req.body._id;
+  var comment = req.body.comment;
+
+
+  verify(req, username, password).then(() => {
+    setTimeout(function () {
+      console.log("returned");
+      console.log(response);
+      if (response == true) {
+        var collection = db.get('demandList');
+        collection.update({
+            _id: _id,
+            gusername: username,
+            state: "Finish"
+          }, {
+            $set: {
+              comment: comment
+            }
+          },
+          function (err, result) {
+            res.json("Demand is commented");
+          }
+        );
+      } else res.json("Authentication Failure");
+    }, 50);
+  });;
+
+
+});
+// --------------------------------------------------------------------------------------------------------------------
+// Utilities:
+// VERIFY
+async function verify(req, username, password) {
+  var db = req.db;
+  var collection1 = db.get('userList');
+  var collection2 = db.get('guserList');
+  collection1.find({
+    "username": username
+  }, {}, function (err, docs) {
+    if (err == null) {
+      console.log(docs[0]['password']);
+      console.log(docs[0]['password'] === password);
+      if ((docs.length != 0) && docs[0]['password'] === password) {
+        console.log("2");
+        collection2.find({
+          "username": username
+        }, {}, function (err2, docs2) {
+          if (err2 == null) {
+            if (docs2.length != 0) {
+              response = true;
+            } else {
+              response = false
+            };
+          } else {
+            response = false
+          };
+        });
+      } else {
+        response = false
+      };
+    } else {
+      responses = false
+    };
+  });
+
+
+}
 
 
 module.exports = router;
