@@ -1,0 +1,68 @@
+<div class="header" routerLink="/profile">
+  <img src="../../../../assets/icons/chevron-left-white.svg" alt="backward" />
+  <span class="title">Detail</span>
+</div>
+<div class="card-body" *ngIf="group">
+  <h5 class="card-title">{{ group.name }}</h5>
+  <!-- Vgroup's information -->
+  <div class="rate">
+    <app-stars></app-stars>
+    <p class="card-text">{{ group.score }}({{ group.commentators }})</p>
+  </div>
+  <div class="users">
+    <fa-icon [icon]="faUser"></fa-icon>
+    <p class="card-text user-number">{{ group.size }}</p>
+  </div>
+  <div class="information">
+    <img src="../../assets/icons/phone.svg" alt="phone" />
+    <p class="card-text">{{ group.phone }}</p>
+  </div>
+  <div class="information">
+    <img src="../../assets/icons/map-pin.svg" alt="need" />
+    <p class="card-text">{{ group.adress }}</p>
+  </div>
+  <div class="information">
+    <img src="../../assets/icons/info.svg" alt="need" />
+    <p class="card-text">{{ group.introduction }}</p>
+  </div>
+
+  <hr/>
+  <!-- Vgroup's need list -->
+  <ng-container *ngFor="let need of group.vneeds">
+    <div class="need">
+      <div class="need-title">
+        <strong>{{ need.name }}:</strong>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span>
+           Contact:<i> {{ need.owner }}</i>
+          </span>
+        </div>
+        <div class="col">
+          <span>
+            Phone:<i>{{ need.phone }}</i>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span>
+           Description: <i>{{ need.description }}</i>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span>
+            CreatedAt:<i> {{ need.createdAt | date }}</i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <hr/>
+  <!-- Add new need -->
+
+</div>

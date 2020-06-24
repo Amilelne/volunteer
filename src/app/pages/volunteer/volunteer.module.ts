@@ -4,14 +4,18 @@ import { VolunteerListComponent } from './volunteer-list/volunteer-list.componen
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VolunteerDetailComponent } from './volunteer-detail/volunteer-detail.component';
 
 @NgModule({
-  declarations: [VolunteerListComponent],
+  declarations: [VolunteerListComponent, VolunteerDetailComponent],
   imports: [
     SharedModule,
     CommonModule,
     FontAwesomeModule,
-    RouterModule.forChild([{ path: '', component: VolunteerListComponent }]),
+    RouterModule.forChild([
+      { path: ':id', component: VolunteerDetailComponent },
+      { path: '', component: VolunteerListComponent },
+    ]),
   ],
 })
 export class VolunteerModule {}

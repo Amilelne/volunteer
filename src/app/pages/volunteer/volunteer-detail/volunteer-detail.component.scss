@@ -1,0 +1,52 @@
+.header {
+  display: inline-flex;
+  background-color: #d63031;
+  color: white;
+  padding: 1rem;
+  width: 100%;
+  .title{
+    font-size: large;
+  }
+}
+.card-body {
+  .rate {
+    display: inline-flex;
+  }
+  .users {
+    display: inline-flex;
+    margin-left: 1rem;
+    .user-number {
+      margin-left: 0.5rem;
+    }
+  }
+  .phone{
+      display: inline-flex;
+      width: 100%;
+  }
+
+  .information {
+    margin: 0.3rem 0;
+    p {
+      display: inline;
+    }
+  }
+
+  .card-text {
+    margin-left: 0.5rem;
+  }
+  .badge {
+    margin: 0.5rem;
+  }
+}
+
+.need{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    .need-title{
+        margin-bottom: 0.25rem;
+    }
+    i{
+        margin-left: 0.25rem;
+    }
+}
+
