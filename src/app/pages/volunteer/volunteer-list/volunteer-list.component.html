@@ -22,7 +22,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ group.name }}</h5>
         <div class="rate">
-          <app-stars></app-stars>
+          <app-stars [ratedCount]=group.score></app-stars>
           <p class="card-text">{{ group.score }}({{ group.commentators }})</p>
         </div>
         <div class="users">
@@ -33,9 +33,12 @@
           <fa-icon [icon]="faPhoneAlt"></fa-icon>
           <p class="card-text">{{ group.phone }}</p>
         </div>
+        <!-- group's need-->
         <div>
-          <span class="badge badge-danger">Need Food</span>
-          <span class="badge badge-danger">Need Clothes</span>
+          <span class="badge badge-danger" *ngFor="let need of group.vneeds">{{ need.name }}</span>
+        </div>
+        <!-- group's tags-->
+        <div>
           <span class="badge badge-warning">Fast</span>
         </div>
       </div>
