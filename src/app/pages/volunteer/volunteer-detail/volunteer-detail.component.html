@@ -1,12 +1,12 @@
-<div class="header" routerLink="/profile">
+<div class="header" routerLink="/vlist">
   <img src="../../../../assets/icons/chevron-left-white.svg" alt="backward" />
-  <span class="title">Detail</span>
+  <span class="title">Group Detail</span>
 </div>
 <div class="card-body" *ngIf="group">
   <h5 class="card-title">{{ group.name }}</h5>
   <!-- Vgroup's information -->
   <div class="rate">
-    <app-stars></app-stars>
+    <app-stars [ratedCount]=group.score></app-stars>
     <p class="card-text">{{ group.score }}({{ group.commentators }})</p>
   </div>
   <div class="users">
