@@ -13,7 +13,7 @@
         class="form-control search-input"
         placeholder="Demand"
         aria-label="Username"
-        aria-describedby="basic-addon1"
+        aria-describedby="input demand"
       />
       <div class="input-group-append" routerLink="/demand/add" routerLinkActive="activate">
         <img
@@ -30,11 +30,21 @@
         <h5 class="card-title">{{ demand.name }}</h5>
         <div class="information">
           <img src="../../assets/icons/phone.svg" alt="phone" />
-          <p class="card-text">{{ demand.phone }}</p>
+          <ng-container *ngIf="userRole == 'volunteer'; else hidephone">
+            <p class="card-text">{{ demand.phone }}</p>
+          </ng-container>
+          <ng-template #hidephone>
+            <p class="card-text">********</p>
+          </ng-template>
         </div>
         <div class="information">
           <img src="../../assets/icons/map-pin.svg" alt="need" />
-          <p class="card-text">{{ demand.location }}</p>
+          <ng-container *ngIf="userRole == 'volunteer'; else hidephone">
+            <p class="card-text">{{ demand.location }}</p>
+          </ng-container>
+          <ng-template #hidephone>
+            <p class="card-text">********</p>
+          </ng-template>
         </div>
         <div class="information">
           <img src="../../assets/icons/clock.svg" alt="need" />

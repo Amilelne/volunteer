@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faUser, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import { DemandService } from 'src/app/services/demand.service';
 import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-demand',
@@ -12,8 +13,8 @@ export class DemandComponent implements OnInit {
   faPhoneAlt = faPhoneAlt;
   faUser = faUser;
 
-  groupList = [1, 2, 3, 4, 5];
   demands;
+  userRole;
 
   constructor(private demandService: DemandService) {}
 
@@ -28,5 +29,8 @@ export class DemandComponent implements OnInit {
         console.log(data[item]);
       }
     });
+
+    this.userRole = AuthService.getUserRole();
+    console.log(this.userRole)
   }
 }
