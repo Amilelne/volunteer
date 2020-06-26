@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,10 +11,9 @@ export class StarsComponent implements OnInit {
   max = 5;
 
   public maxItem: any[];
-  public ratedCount: number;
+  @Input() ratedCount: number;
 
   constructor() {
-    this.ratedCount = 4;
   }
 
   ngOnInit(): void {
