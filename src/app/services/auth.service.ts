@@ -13,9 +13,9 @@ export class AuthService {
 
   signin(signinInput) {
     return this.http.post('/api/auth/local', signinInput).pipe(
-      tap((data: { jwt, user: {role: {id, type}} }) => {
+      tap((data: { jwt, user: {id, role: {type}} }) => {
         AuthService.storeToken(data.jwt);
-        AuthService.storeUserId(data.user.role.id);
+        AuthService.storeUserId(data.user.id);
         AuthService.storeUserRole(data.user.role.type);
       })
     );
