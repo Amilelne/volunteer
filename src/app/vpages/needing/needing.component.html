@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-body header">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <img
+          src="../../assets/icons/search.svg"
+          alt="search"
+          class="searchIcon"
+        />
+      </div>
+      <input
+        type="text"
+        class="form-control search-input"
+        placeholder="Demand"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let demand of needings">
+      <div class="card-body">
+        <h5 class="card-title">{{ demand.name }}</h5>
+        <div class="information">
+          <img src="../../assets/icons/phone.svg" alt="phone" />
+          <p class="card-text">{{ demand.phone }}</p>
+        </div>
+        <div class="information">
+          <img src="../../assets/icons/map-pin.svg" alt="need" />
+          <p class="card-text">{{ demand.location }}</p>
+        </div>
+        <div class="information">
+          <img src="../../assets/icons/clock.svg" alt="need" />
+          <p class="card-text">{{ demand.deadline }}</p>
+        </div>
+        <div class="information">
+          <img src="../../assets/icons/info.svg" alt="need" />
+          <p class="card-text">Asking someone to help buying water</p>
+        </div>
+
+        <!-- Show tags key-->
+        <ng-container *ngIf="demand.tagsKey">
+          <ng-container *ngFor="let key of demand.tagsKey">
+            <span
+              *ngIf="demand.tags[key] === 'very'"
+              class="badge badge-danger"
+              >{{ key }}</span
+            >
+            <span
+              *ngIf="demand.tags[key] === 'normal'"
+              class="badge badge-warning"
+              >{{ key }}</span
+            >
+          </ng-container>
+        </ng-container>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="addButton">
+  <img src="../../assets/icons/plus-circle.svg" alt="addDemand" />
+</div>

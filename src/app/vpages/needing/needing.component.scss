@@ -1,0 +1,50 @@
+.header{
+    display: inline-flex;
+    background-color: #d63031;
+    color: white;
+    padding: 1rem;
+    .card-title{
+        padding: 1rem;
+    }
+}
+.input-group{
+    .searchIcon{
+        background-color: white;
+        padding-left: 0.5rem;
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+    }
+    .search-input{
+        border: none;
+    }
+    input:focus{
+        outline: none;
+        box-shadow: none;
+    }
+}
+.rate{
+    display: inline-flex;
+}
+.users{
+    display: inline-flex;
+    margin-left: 1.5rem;
+}
+.user-number{
+    margin-left: 0.5rem;
+}
+.card-text{
+    margin-left: 0.5rem;
+}
+.badge{
+    margin: 0.5rem;
+}
+.information{
+    margin: 0.3rem 0;
+    p{
+        display: inline;
+    }
+}
+.addButton{
+    position: absolute;
+    float: right;
+}

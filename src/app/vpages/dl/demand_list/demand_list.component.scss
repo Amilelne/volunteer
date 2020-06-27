@@ -1,0 +1,43 @@
+.header{
+    display: inline-flex;
+    background-color: #d63031;
+    color: white;
+    padding: 1rem;
+    .card-title{
+        padding: 1rem;
+    }
+}
+.rate{
+    display: inline-flex;
+}
+.users{
+    display: inline-flex;
+    margin-left: 1.5rem;
+}
+.user-number{
+    margin-left: 0.5rem;
+}
+.phone{
+    display: inline-flex;
+}
+.card-text{
+    margin-left: 0.5rem;
+}
+.badge{
+    margin: 0.5rem;
+}
+.input-group{
+    .searchIcon{
+        background-color: white;
+        padding-left: 0.5rem;
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+    }
+    .search-input{
+        border: none;
+    }
+    input:focus{
+        outline: none;
+        box-shadow: none;
+    }
+}
