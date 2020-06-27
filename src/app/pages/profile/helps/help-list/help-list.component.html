@@ -1,0 +1,62 @@
+<div class="main">
+    <div class="header" routerLink="/profile">
+      <img src="../../../assets/icons/chevron-left.svg" alt="backward" />
+      <span class="title">My Helps</span>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let demand of helps">
+        <div class="card-body">
+          <h5 class="card-title">
+            <span>{{ demand.name }}</span>
+            <span [ngSwitch]="demand.state" class="demandState">
+              <span *ngSwitchCase="0">
+                wait
+              </span>
+              <span *ngSwitchCase="1">
+                process
+              </span>
+              <span *ngSwitchDefault>
+                completed
+              </span>
+            </span>
+          </h5>
+          <div class="information">
+            <img src="../../assets/icons/phone.svg" alt="phone" />
+            <p class="card-text">{{ demand.phone }}</p>
+          </div>
+          <div class="information">
+            <img src="../../assets/icons/map-pin.svg" alt="need" />
+            <p class="card-text">{{ demand.location }}</p>
+          </div>
+          <div class="information">
+            <img src="../../assets/icons/clock.svg" alt="need" />
+            <p class="card-text">{{ demand.deadline }}</p>
+          </div>
+          <div class="information">
+            <img src="../../assets/icons/info.svg" alt="need" />
+            <p class="card-text">Asking someone to help buying water</p>
+          </div>
+  
+          <!-- Show tags key-->
+          <ng-container *ngIf="demand.tagsKey">
+            <ng-container *ngFor="let key of demand.tagsKey">
+              <span
+                *ngIf="demand.tags[key] === 'very'"
+                class="badge badge-danger"
+                >{{ key }}</span
+              >
+              <span
+                *ngIf="demand.tags[key] === 'normal'"
+                class="badge badge-warning"
+                >{{ key }}</span
+              >
+            </ng-container>
+          </ng-container>
+  
+          <button class="btn btn-success">Complete</button>
+          <button class="btn btn-danger">Cancel</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  

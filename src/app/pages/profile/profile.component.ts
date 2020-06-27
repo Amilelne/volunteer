@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
+import { DemandsComponent } from "./demands/demands.component";
 
 @Component({
   selector: 'app-profile',

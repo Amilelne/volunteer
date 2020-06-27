@@ -26,28 +26,7 @@ const routes: Routes = [
   },
   {
     path: '', redirectTo: 'auth', pathMatch: 'full' 
-  },
-  {
-    path: 'vauth',
-    loadChildren: () =>
-      import('./vpages/vauth/vauth.module').then((m) => m.VAuthModule),
-  },
-  {
-    path: 'dlist',
-    loadChildren: () =>
-      import('./vpages/dl/dl.module').then((m) => m.DlModule
-      ),
-  },
-  {
-    path: 'needing',
-    loadChildren: () =>
-      import('./vpages/needing/needing.module').then((m) => m.NeedingModule),
-  },
-  {
-    path: 'vprofile',
-    loadChildren: () =>
-      import('./vpages/vprofile/vprofile.module').then((m) => m.VProfileModule),
-  },
+  }
 ];
 
 @NgModule({

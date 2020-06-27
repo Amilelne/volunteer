@@ -1,19 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DemandListComponent } from './demand-list/demand-list.component';
-import { DemandDetailComponent } from './demand-detail/demand-detail.component';
 import { ProfileComponent } from './profile.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
+import { NeedsModule } from './needs/needs.module';
+import { HelpsModule } from './helps/helps.module';
+import { MyDemandsModule } from "./demands/demands.module";
 
 const profileRoutes: Routes = [
   {
-    path: 'demands/:state',
-    component: DemandListComponent,
+    path: 'demands',
+    loadChildren: () =>
+      import('./demands/demands.module').then((m) => m.MyDemandsModule),
   },
   {
-    path: 'demand/:id',
-    component: DemandDetailComponent,
+    path: 'needs',
+    loadChildren: () =>
+      import('./needs/needs.module').then((m) => m.NeedsModule),
+  },
+  {
+    path: 'helps',
+    loadChildren: () =>
+      import('./helps/helps.module').then((m) => m.HelpsModule),
   },
   {
     path: 'settings',
@@ -27,11 +35,14 @@ const profileRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    DemandListComponent,
-    DemandDetailComponent,
     ProfileComponent,
     SettingsComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(profileRoutes)],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(profileRoutes),
+    HelpsModule,
+    MyDemandsModule
+  ],
 })
 export class ProfileModule {}
