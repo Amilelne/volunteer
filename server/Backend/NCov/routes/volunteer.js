@@ -181,8 +181,8 @@ async function verify(req, username, password) {
     "username": username
   }, {}, function (err, docs) {
     if (err == null) {
-      console.log(docs[0]['password']);
-      console.log(docs[0]['password'] === password);
+      console.log(docs);
+      console.log(username);
       if ((docs.length != 0) && docs[0]['password'] === password) {
         console.log("2");
         collection2.find({
