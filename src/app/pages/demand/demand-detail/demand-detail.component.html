@@ -1,56 +1,73 @@
-<div>
-  <div class="header" routerLink="/demand">
-    <img src="../../../../assets/icons/chevron-left-white.svg" alt="backward" />
-    <span>Demand Detail</span>
-  </div>
-  <ng-container *ngIf="demand">
-    <div class="container">
-      <h5 class="title">{{ demand.name }}</h5>
-      <div class="user">
-        <img src={{demand.user.avatar.url}} alt="avatar" class="avatar" />
+<ng-container *ngIf="userRole == 'volunteer'; else permissionRequired">
+  <div>
+    <div class="header" routerLink="/demand">
+      <img
+        src="../../../../assets/icons/chevron-left-white.svg"
+        alt="backward"
+      />
+      <span>Demand Detail</span>
+    </div>
+    <ng-container *ngIf="demand">
+      <div class="container">
+        <h5 class="title">{{ demand.name }}</h5>
+        <div class="user">
+          <img src="{{ demand.user.avatar.url }}" alt="avatar" class="avatar" />
           <div class="info">
-            <span>{{demand.user.username}}</span>
+            <span>{{ demand.user.username }}</span>
             <span class="role">Demand side</span>
           </div>
-      </div>
-      <p class="createTime">Created Time: {{ demand.createdAt | date}}</p>
-      <div class="information">
-        <img src="../../assets/icons/phone.svg" alt="phone" />
-        <p class="card-text">Phone: {{ demand.phone }}</p>
-      </div>
-      <div class="information">
-        <img src="../../assets/icons/map-pin.svg" alt="need" />
-        <p class="card-text">Location: {{ demand.location }}</p>
-      </div>
-      <div class="information">
-        <img src="../../assets/icons/clock.svg" alt="need" />
-        <p class="card-text">Deadline: {{ demand.deadline }}</p>
-      </div>
-      <div class="information">
-        <img src="../../assets/icons/info.svg" alt="need" />
-        <p class="card-text">Description: Asking someone to help buying water</p>
-      </div>
+        </div>
+        <p class="createTime">Created Time: {{ demand.createdAt | date }}</p>
+        <div class="information">
+          <img src="../../assets/icons/phone.svg" alt="phone" />
+          <p class="card-text">Phone: {{ demand.phone }}</p>
+        </div>
+        <div class="information">
+          <img src="../../assets/icons/map-pin.svg" alt="need" />
+          <p class="card-text">Location: {{ demand.location }}</p>
+        </div>
+        <div class="information">
+          <img src="../../assets/icons/clock.svg" alt="need" />
+          <p class="card-text">Deadline: {{ demand.deadline }}</p>
+        </div>
+        <div class="information">
+          <img src="../../assets/icons/info.svg" alt="need" />
+          <p class="card-text">
+            Description: Asking someone to help buying water
+          </p>
+        </div>
 
-      <!-- Show tags key-->
-      <ng-container *ngIf="demand.tagsKey">
-        <ng-container *ngFor="let key of demand.tagsKey">
-          <span
-            *ngIf="demand.tags[key] === 'very'"
-            class="badge badge-danger"
-            >{{ key }}</span
-          >
-          <span
-            *ngIf="demand.tags[key] === 'normal'"
-            class="badge badge-warning"
-            >{{ key }}</span
-          >
+        <!-- Show tags key-->
+        <ng-container *ngIf="demand.tagsKey">
+          <ng-container *ngFor="let key of demand.tagsKey">
+            <span
+              *ngIf="demand.tags[key] === 'very'"
+              class="badge badge-danger"
+              >{{ key }}</span
+            >
+            <span
+              *ngIf="demand.tags[key] === 'normal'"
+              class="badge badge-warning"
+              >{{ key }}</span
+            >
+          </ng-container>
         </ng-container>
-      </ng-container>
 
-      <!-- Recept button-->
-      <div class="row">
-        <button class="btn btn-success" (click)="receptDemand()">Recept</button>
+        <!-- Recept button-->
+        <div class="row">
+          <button class="btn btn-success" (click)="receptDemand()">
+            Recept
+          </button>
+        </div>
       </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #permissionRequired>
+  <div class="warning">
+    <div class="alert alert-danger">
+      You are NOT volunteer. Be a volunteer FIRST!!!
     </div>
-  </ng-container>
-</div>
+  </div>
+
+</ng-template>

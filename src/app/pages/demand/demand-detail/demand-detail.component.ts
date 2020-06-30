@@ -11,6 +11,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class DemandDetailComponent implements OnInit {
   userId;
+  userRole;
   demand;
   demandId;
 
@@ -36,6 +37,7 @@ export class DemandDetailComponent implements OnInit {
       });
 
     this.userId = AuthService.getUserId();
+    this.userRole = AuthService.getUserRole();
   }
 
   receptDemand() {
