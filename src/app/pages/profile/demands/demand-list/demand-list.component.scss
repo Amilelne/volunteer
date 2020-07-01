@@ -12,16 +12,16 @@
     font-size: large;
   }
 }
-.list-group{
-    .list-group-item{
-        margin: 1rem 1rem 0rem 1rem;
-        border-radius: 1.5rem;
-    }
+.list-group {
+  .list-group-item {
+    margin: 1rem 1rem 0rem 1rem;
+    border-radius: 1.5rem;
+  }
 }
 .demandState {
-    float: right;
-    color: #d63031;
-  }
+  float: right;
+  color: #d63031;
+}
 .card-text {
   margin-left: 0.5rem;
 }
@@ -35,8 +35,18 @@
   }
 }
 
-button{
-    width: 5rem;
-    float: right;
-    margin-left: 1rem;
+button {
+  width: 5rem;
+  float: right;
+  margin-left: 1rem;
+}
+
+.warning {
+  display: flex;
+  margin-top: 15rem;
+  text-align: center;
+  .alert {
+    width: 80%;
+    margin: auto;
+  }
 }

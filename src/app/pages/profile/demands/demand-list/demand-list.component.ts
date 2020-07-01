@@ -22,6 +22,7 @@ export class DemandListComponent implements OnInit {
     let state = this.route.snapshot.paramMap.get('state');
     this.profileService.getDemands().subscribe((data: { demands }) => {
       this.demandIds = data.demands;
+      console.log(data.demands)
       this.demandIds.forEach((id) => {
         this.demandService.getDemandById(id).subscribe((data: { state }) => {
           if (state == '3') {

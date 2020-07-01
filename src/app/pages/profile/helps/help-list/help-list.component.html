@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" *ngIf="helps.length; else emptyNotify">
     <div class="header" routerLink="/profile">
       <img src="../../../assets/icons/chevron-left.svg" alt="backward" />
       <span class="title">My Helps</span>
@@ -59,4 +59,14 @@
       </li>
     </ul>
   </div>
+
+  <ng-template #emptyNotify>
+    <div class="warning">
+      <div class="alert alert-danger">
+        You haven't help others! Help others 
+        <a href="/demand">Here</a>
+      </div>
+    </div>
+  
+  </ng-template>
   

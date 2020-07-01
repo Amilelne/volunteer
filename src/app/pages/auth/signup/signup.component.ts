@@ -15,6 +15,7 @@ import { Validators, ValidationErrors } from '@angular/forms';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
+
   // check password and repeatPassword are the same
   repeatPasswordValidator: ValidatorFn = (
     control: FormGroup
@@ -31,7 +32,7 @@ export class SignupComponent implements OnInit {
       username: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-      repeatPassword: new FormControl('', Validators.required),
+      repeatPassword: new FormControl('', Validators.required)
     },
     { validators: this.repeatPasswordValidator }
   );

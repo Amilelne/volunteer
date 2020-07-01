@@ -64,8 +64,7 @@
     />
     <div
       *ngIf="
-        (signupForm.errors?.differentPassword ||
-        repeatPassword.invalid) &&
+        (signupForm.errors?.differentPassword || repeatPassword.invalid) &&
         (repeatPassword.dirty || repeatPassword.touched)
       "
       class="alert alert-danger"

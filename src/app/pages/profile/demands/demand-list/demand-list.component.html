@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" *ngIf="demands.length; else emptyNotify">
   <div class="header" routerLink="/profile">
     <img src="../../../assets/icons/chevron-left.svg" alt="backward" />
     <span class="title">My demands</span>
@@ -59,3 +59,13 @@
     </li>
   </ul>
 </div>
+
+<ng-template #emptyNotify>
+  <div class="warning">
+    <div class="alert alert-danger">
+      You don't have demands now! Create new demand 
+      <a href="/demand">Here</a>
+    </div>
+  </div>
+
+</ng-template>

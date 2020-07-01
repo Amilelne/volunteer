@@ -15,7 +15,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.profileService.getProfile().subscribe((data) => {
       console.log(data);
-      this.user = data
+      this.user = data;
+      console.log(this.user.avatar)
+      if(!this.user.avatar){
+        this.user.avatar = {"url": "/uploads/default_3da5d115ea.png" }
+      }
       this.user.avatar.url = '/api'+this.user.avatar.url;
     })
   }

@@ -1,4 +1,9 @@
-<div class="header"></div>
+<div class="header">
+  <div class="title" routerLink='/demand'>
+    <img src="../../../../assets/icons/chevron-left-white.svg" alt="backward" />
+    <span>Add new demand</span>
+  </div>
+</div>
 <form [formGroup]="addDemandForm" (ngSubmit)="onSubmit()">
   <div class="form-row">
     <div class="form-group col-6">
