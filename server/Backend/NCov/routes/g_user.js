@@ -14,7 +14,7 @@ var corsOptions = {
 
 // --------------------------------------------------------------------------------------------------------------------
 // USER BEHAVIORS:
-// LOGIN, LOGOUT
+// LOGIN, LOGOUT, REGISTER
 
 router.post('/login', cors(corsOptions), async function (req, res) {
 	// return volunteerList if success
@@ -71,6 +71,32 @@ router.get('/logout', cors(corsOptions), function (req, res) {
 
 });
 
+router.post('/register', cors(corsOptions), async function (req, res) {
+	// get info
+	var db = req.db;
+	var username = req.body.username;
+	var password = req.body.password;
+	var phone = req.body.phone;
+	var email = req.body.email;
+	
+	var collection = db.get('userList');
+		collection.find({
+			username: username
+		},function (err1, docs1) {
+			if(docs1.length==0){
+				collection.insert({username:username, password:password,phone:phone,email:email},function (err1, docs1) {
+					var collection1 = db.get('guserList');
+					collection1.insert({username:username, password:password},function (err1, docs1) {
+						res.json("success");
+					});				
+				});
+			}else{
+				res.json("Failure: username is used");
+			}
+		});
+
+
+});
 
 // --------------------------------------------------------------------------------------------------------------------
 // MANAGE DEMAND:
