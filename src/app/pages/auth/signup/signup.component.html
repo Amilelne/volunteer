@@ -69,10 +69,10 @@
       "
       class="alert alert-danger"
     >
-      <div *ngIf="repeatPassword.errors.required">
+      <div *ngIf="repeatPassword.errors?.required">
         Repeat password is required
       </div>
-      <div *ngIf="signupForm.errors?.differentPassword">
+      <div>
         Different from password
       </div>
     </div>
