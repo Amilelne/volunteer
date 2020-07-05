@@ -36,4 +36,8 @@ export class DemandListComponent implements OnInit {
       });
     });
   }
+
+  deleteDemandById(demandId){
+    this.demandService.deleteDemandById(demandId);
+  }
 }

@@ -28,6 +28,9 @@ export class DemandDetailComponent implements OnInit {
       .getDemandById(this.demandId)
       .subscribe((data: { tags }) => {
         this.demand = data;
+        if (!this.demand.user.avatar) {
+          this.demand.user.avatar = { url: '/uploads/default_3da5d115ea.png' };
+        }
         this.demand.user.avatar.url = '/api' + this.demand.user.avatar.url;
         console.log(data);
         if (data.tags) {

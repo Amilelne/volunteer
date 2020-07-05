@@ -16,4 +16,8 @@ export class ProfileService {
   getDemands(){
     return this.http.get('/api/users/me');
   }
+
+  addDemand(userId, demand){
+    return this.http.put('/api/users/' + userId, demand);
+  }
 }

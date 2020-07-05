@@ -24,7 +24,11 @@ export class DemandService {
     return this.http.put('/api/demands/' + id, updateInput);
   }
 
-  receptDemand(userId, demandInput){
-    return this.http.put('/api/users/'+userId, demandInput);
+  receptDemand(userId, demandInput) {
+    return this.http.put('/api/users/' + userId, demandInput);
+  }
+
+  deleteDemandById(demandId) {
+    return this.http.delete('/api/demands/' + demandId);
   }
 }

@@ -15,7 +15,6 @@ import { Validators, ValidationErrors } from '@angular/forms';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-
   // check password and repeatPassword are the same
   repeatPasswordValidator: ValidatorFn = (
     control: FormGroup
@@ -24,7 +23,8 @@ export class SignupComponent implements OnInit {
     const repeatPassword = control.get('repeatPassword');
 
     return password && repeatPassword && password.value === repeatPassword.value
-      ? null: { 'differentPassword': true };
+      ? null
+      : { differentPassword: true };
   };
 
   signupForm = new FormGroup(
@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
       username: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-      repeatPassword: new FormControl('', Validators.required)
+      repeatPassword: new FormControl('', Validators.required),
     },
     { validators: this.repeatPasswordValidator }
   );
@@ -42,10 +42,12 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    this.authService.signup(this.signupForm.value).subscribe((data) => {
-      console.log(data);
-      this.router.navigate(['/auth/sign-in']);
-    });
+    this.authService
+      .signup(this.signupForm.value)
+      .subscribe((data) => {
+        console.log(data);
+        this.router.navigate(['/auth/sign-in']);
+      });
   }
 
   // Reactive form get entities

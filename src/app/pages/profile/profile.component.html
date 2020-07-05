@@ -14,8 +14,20 @@
       />
     </ng-container>
   </div>
-  <app-demands></app-demands>
-  <app-helps></app-helps>
+
+  
+  <ng-container *ngIf="userRole == 'volunteer'; else generalUser">
+    <app-helps></app-helps>
+    <app-demands></app-demands>
+    <app-needs></app-needs>
+  </ng-container>
+  <ng-template #generalUser>
+    <app-helps></app-helps>
+    <app-demands></app-demands>
+    <app-needs></app-needs>
+  </ng-template>
+  
+
   <div class="child-menu">
     <div class="func">
       <img src="../../../assets/icons/box.svg" alt="collection" />
