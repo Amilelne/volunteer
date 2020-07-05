@@ -1,0 +1,37 @@
+<div class="header" routerLink="/profile">
+    <img
+      src="../../../../assets/icons/chevron-left-white.svg"
+      alt="backward"
+    />
+    <span>My Needs</span>
+</div>
+<ul  class="list-group">
+    <li  class="list-group-item" *ngFor="let need of groupneeds">
+        <div class="card-body" *ngIf="need">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <!-- Need's information -->
+            <div class="information">
+                <img src="../../assets/icons/user.svg" alt="contact" />
+                <p class="card-text">{{ item.contact }}</p>
+            </div>
+            <div class="information">
+              <img src="../../assets/icons/phone.svg" alt="phone" />
+              <p class="card-text">{{ item.phone }}</p>
+            </div>
+            <div class="information">
+                <img src="../../assets/icons/clock.svg" alt="date" />
+                <i class="card-text">Created at {{ item.date }}</i>
+              </div>
+            <div class="information">
+              <img src="../../assets/icons/info.svg" alt="description" />
+              <p class="card-text">{{ item.description }}</p>
+            </div>
+            <!-- Finish button-->
+            <div class="row">
+                <button class="btn btn-success" >
+                Finish
+                </button>
+            </div>
+        </div>
+    </li>
+</ul>

@@ -42,7 +42,8 @@ const profileRoutes: Routes = [
     CommonModule,
     RouterModule.forChild(profileRoutes),
     HelpsModule,
-    MyDemandsModule
+    MyDemandsModule,
+    NeedsModule
   ],
 })
 export class ProfileModule {}
