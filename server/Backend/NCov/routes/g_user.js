@@ -192,10 +192,7 @@ router.post('/viewDemands', cors(corsOptions), async function (req, res) {
 			if (response == true) {
 				var collection = db.get('demandList');
 				collection.find({
-					gusername: username,
-					state: {
-						$ne: "Finish"
-					}
+					gusername: username
 				}, function (err1, docs1) {
 					console.log(docs1);
 					res.send(docs1);
