@@ -55,8 +55,6 @@ router.post('/login', cors(corsOptions), async function (req, res) {
 						path: "$username1",
 						preserveNullAndEmptyArrays: false
 					}
-				}, {
-					$limit: 10
 				}], function (err1, docs1) {
 					console.log(docs1);
 					res.send(docs1);
@@ -194,10 +192,7 @@ router.post('/viewDemands', cors(corsOptions), async function (req, res) {
 			if (response == true) {
 				var collection = db.get('demandList');
 				collection.find({
-					gusername: username,
-					state: {
-						$ne: "Finish"
-					}
+					gusername: username
 				}, function (err1, docs1) {
 					console.log(docs1);
 					res.send(docs1);
@@ -258,8 +253,7 @@ router.post('/commentOnDemand', cors(corsOptions), async function (req, res) {
 				var collection = db.get('demandList');
 				collection.update({
 						_id: _id,
-						gusername: username,
-						state: "Finish"
+						gusername: username
 					}, {
 						$set: {
 							comment: comment
