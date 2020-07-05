@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { DemandService } from 'src/app/services/demand.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-demand-list',
@@ -15,7 +15,8 @@ export class DemandListComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private demandService: DemandService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +39,9 @@ export class DemandListComponent implements OnInit {
   }
 
   deleteDemandById(demandId){
-    this.demandService.deleteDemandById(demandId);
+    this.demandService.deleteDemandById(demandId).subscribe(data=>{
+      console.log(data);
+      this.router.navigate(["/profile"])
+    })
   }
 }
