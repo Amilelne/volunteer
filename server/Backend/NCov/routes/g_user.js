@@ -55,8 +55,6 @@ router.post('/login', cors(corsOptions), async function (req, res) {
 						path: "$username1",
 						preserveNullAndEmptyArrays: false
 					}
-				}, {
-					$limit: 10
 				}], function (err1, docs1) {
 					console.log(docs1);
 					res.send(docs1);

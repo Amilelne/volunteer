@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 var guserRouter = require('./routes/g_user');
 var volunteerRouter = require('./routes/volunteer');
+var guRouter = require('./routes/general_usage');
 
 //Database
 var monk = require('monk');
@@ -27,6 +28,7 @@ app.use(function(req,res,next){
 
 app.use('/g_user', guserRouter);
 app.use('/volunteer', volunteerRouter);
+app.use('/general_usage', guRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -29,7 +29,7 @@ router.post('/login', cors(corsOptions), async function (req, res) {
     setTimeout(function () {
       if (response == true) {
         var collection = db.get('demandList');
-        collection.find({},{},function (err1, docs1) {
+        collection.find({"state": "Waiting"},{},function (err1, docs1) {
           console.log(docs1);
           res.send(docs1);
         });
@@ -199,7 +199,7 @@ router.delete('/deleteNeed', cors(corsOptions), async function (req, res) {
 
 // --------------------------------------------------------------------------------------------------------------------
 // MANAGE DEMAND:
-// ACCEPT, FINISH
+// ACCEPT, FINISH, VIEW_ACCEPTED
 
 router.post('/acceptDemand', cors(corsOptions), async function (req, res) {
   // get info
@@ -274,6 +274,29 @@ router.post('/finishDemand', cors(corsOptions), async function (req, res) {
 
 });
 
+router.post('/view_accepted_demand', cors(corsOptions), async function (req, res) {
+  // get info
+  var db = req.db;
+  var username = req.body.username;
+  var password = req.body.password;
+
+
+  verify(req, username, password).then(() => {
+    setTimeout(function () {
+      console.log("returned");
+      console.log(response);
+      if (response == true) {
+        var collection = db.get('demandList');
+        collection.find({
+          vusername: username
+        }, function (err1, docs1) {
+          console.log(docs1);
+          res.send(docs1);
+        });
+      } else res.json("Authentication Failure");
+    }, 50);
+  });
+});
 // --------------------------------------------------------------------------------------------------------------------
 // Utilities:
 // VERIFY
