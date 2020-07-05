@@ -253,8 +253,7 @@ router.post('/commentOnDemand', cors(corsOptions), async function (req, res) {
 				var collection = db.get('demandList');
 				collection.update({
 						_id: _id,
-						gusername: username,
-						state: "Finish"
+						gusername: username
 					}, {
 						$set: {
 							comment: comment
