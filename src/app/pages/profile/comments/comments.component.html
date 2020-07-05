@@ -1,0 +1,53 @@
+<div class="header" routerLink="/profile">
+    <img
+      src="../../../../assets/icons/chevron-left-white.svg"
+      alt="backward"
+    />
+    <span>My Comments</span>
+</div>
+<div class="card-body" *ngIf="demand">
+    <h5 class="card-title">{{ demand.name }}</h5>
+    <!-- Demand's information -->
+    <div class="information">
+        <img src="../../assets/icons/phone.svg" alt="phone" />
+        <p class="card-text">{{ demand.phone }}</p>
+    </div>
+    <div class="information">
+        <img src="../../assets/icons/clock.svg" alt="date" />
+        <i class="card-text">Created at {{ demand.deadline }}</i>
+    </div>
+    <div class="information">
+        <img src="../../assets/icons/info.svg" alt="description" />
+        <p class="card-text">{{ demand.description }}</p>
+    </div>
+    <!-- Finish button-->
+    <div class="row">
+        <button class="btn btn-success">
+            Finish
+        </button>
+    </div>
+</div>
+<hr />
+<form>
+    <!-- <div class="form-row"> -->
+        <!-- <div class="form-group col-6">
+        <label for="inputTitle">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputTitle"
+          formControlName="name"
+        />
+        </div> -->
+        <div class="form-group">
+        <label for="inputDescription">Comment</label>
+        <textarea
+            class="form-control"
+            aria-label="With textarea"
+            id="inputComment"
+            formControlName="description"
+        ></textarea>
+        </div>
+    <!-- </div> -->
+    <button type="submit" class="btn btn-lg">Make Comment</button>
+</form>

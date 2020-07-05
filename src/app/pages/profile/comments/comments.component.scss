@@ -1,0 +1,34 @@
+.header {
+    display: inline-flex;
+    background-color: #d63031;
+    color: white;
+    padding: 1rem;
+    width: 100%;
+    .title{
+      font-size: large;
+    }
+  }
+.card-body {
+    .phone{
+        display: inline-flex;
+        width: 100%;
+    }
+
+    .information {
+        margin: 0.3rem 0;
+        p {
+        display: inline;
+        }
+    }
+
+    .card-text {
+        margin-left: 0.5rem;
+    }
+    .badge {
+        margin: 0.5rem;
+    }
+}
+form{
+    width: 90%;
+    margin: 3rem auto;
+}
