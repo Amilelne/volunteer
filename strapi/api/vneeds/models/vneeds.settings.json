@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vneeds",
+  "info": {
+    "name": "Vneeds"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "state": {
+      "type": "integer",
+      "default": 0
+    },
+    "vgroup": {
+      "model": "vgroups"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}

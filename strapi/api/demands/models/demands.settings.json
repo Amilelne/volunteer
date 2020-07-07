@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "demands",
+  "info": {
+    "name": "demands"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "deadline": {
+      "type": "date"
+    },
+    "description": {
+      "type": "text"
+    },
+    "tags": {
+      "type": "json"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "state": {
+      "type": "integer",
+      "default": 0
+    },
+    "volunteer": {
+      "type": "string"
+    }
+  }
+}

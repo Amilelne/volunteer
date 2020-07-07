@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/vgroups",
+      "handler": "vgroups.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/vgroups/count",
+      "handler": "vgroups.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/vgroups/:id",
+      "handler": "vgroups.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/vgroups",
+      "handler": "vgroups.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/vgroups/:id",
+      "handler": "vgroups.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/vgroups/:id",
+      "handler": "vgroups.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

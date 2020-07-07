@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vgroups",
+  "info": {
+    "name": "Vgroups"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "score": {
+      "type": "decimal"
+    },
+    "commentators": {
+      "type": "integer"
+    },
+    "size": {
+      "type": "integer"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "json"
+    },
+    "adress": {
+      "type": "text"
+    },
+    "introduction": {
+      "type": "string"
+    },
+    "vneeds": {
+      "collection": "vneeds"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/vneeds",
+      "handler": "vneeds.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/vneeds/count",
+      "handler": "vneeds.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/vneeds/:id",
+      "handler": "vneeds.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/vneeds",
+      "handler": "vneeds.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/vneeds/:id",
+      "handler": "vneeds.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/vneeds/:id",
+      "handler": "vneeds.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
