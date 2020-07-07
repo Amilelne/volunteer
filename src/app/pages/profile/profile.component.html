@@ -18,13 +18,10 @@
   
   <ng-container *ngIf="userRole == 'volunteer'; else generalUser">
     <app-helps></app-helps>
-    <app-demands></app-demands>
     <app-needs></app-needs>
   </ng-container>
   <ng-template #generalUser>
-    <app-helps></app-helps>
     <app-demands></app-demands>
-    <app-needs></app-needs>
   </ng-template>
   
 
