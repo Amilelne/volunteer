@@ -12,3 +12,6 @@ We use strapi for backend. First you should install strapi, just go to strapi fo
 We use Angular for front-end. There are mainly five parts of front-end. The main part is "pages", it includes the mainly pages of front-end. The "services" part provides all the http services functions for pages. 
 
 In "pages", it includes auth, demand, profile and volunteer. "auth" part includes sign-in and sign-up. The "profile" part displays the informations about user. User can update personal informations, revise settings, check demands, helps and needs.The "demand" part shows users' demands and volunteer can check the details of the demand, then they can accept users' demands. The "volunteer" part shows volunteer group's information and their needs.
+
+## Demo address
+https://drive.google.com/file/d/1YpvrXp5j9TmFan0iGLim5QFR6KdOzT4v/view
