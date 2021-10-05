@@ -33,7 +33,7 @@
     "fastify-cors": "^3.0.3",
     "fastify-formbody": "^3.2.0",
     "fastify-mongoose-api": "^1.0.12",
-    "fastify-static": "^2.7.0",
+    "fastify-static": "^4.2.4",
     "mongoose": "^5.9.18",
     "path": "^0.12.7",
     "rxjs": "~6.5.4",
